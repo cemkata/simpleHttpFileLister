@@ -1,4 +1,1 @@
 # simpleHttpFileLister
-qwe
-das
-ads
