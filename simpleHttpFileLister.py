@@ -24,16 +24,16 @@ def index(filepath = '/'):
    else:
        page=header.format(path=filepath)
        if filepath != '/':
-          filepath = '/' + filepath
+          #filepath = '/' + filepath
           page = page + parentfolder
        for fn in listdir(rootFolder+"/"+filepath):
         fileName = rootFolder + filepath + fn
         date = strftime('%Y-%M-%d %H:%M', localtime(getmtime(fileName)))
         if isdir(fileName):
-           page = page + '<tr><td valign="top"><img src="'+folderIcon+'" alt="[FILE]"></td><td><a href="'+filepath + fn +'/">'+fn+'</a></td><td align="right">'+date+'  </td><td align="right"> - </td></tr>'
+           page = page + '<tr><td valign="top"><img src="'+folderIcon+'" alt="[FILE]"></td><td><a href="'+ fn +'/">'+fn+'</a></td><td align="right">'+date+'  </td><td align="right"> - </td></tr>'
         else:
            size = bytesConvert(getsize(fileName))
-           page = page + '<tr><td valign="top"><img src="'+fileIcon+'" alt="[FILE]"></td><td><a href="'+filepath + fn+'">'+fn+'</a></td><td align="right">'+date+'  </td><td align="right">'+size+' </td></tr>'
+           page = page + '<tr><td valign="top"><img src="'+fileIcon+'" alt="[FILE]"></td><td><a href="'+ fn+'">'+fn+'</a></td><td align="right">'+date+'  </td><td align="right">'+size+' </td></tr>'
 
        page = page + footer.format(port = port, ip = host, name = serverName)
        return page
