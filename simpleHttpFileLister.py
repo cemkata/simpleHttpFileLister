@@ -28,6 +28,8 @@ def do_upload():
    #   return 'File extension not allowed.'
    if path.startswith('/'):
       path = path.replace("/","", 1)
+   if path.startswith('../'):
+       redirect('/' + path)
    save_path = os.path.join(rootFolder, path)
    upload.save(save_path) # appends upload.filename automatically
    redirect('/' + path)
@@ -41,13 +43,12 @@ def index(filepath = '/'):
       return static_file(filepath, root=rootFolder)
    else:
        page=header.format(path=filepath)
-       if filepath != '/':
-          #filepath = '/' + filepath
-          page = page + parentfolder
-          listed_folder = os.path.join(rootFolder, filepath)
-       else:
+       if filepath.startswith('../') or filepath == '/':
           filepath = ""
           listed_folder = rootFolder
+       else:
+          page = page + parentfolder
+          listed_folder = os.path.join(rootFolder, filepath)
 
        for fn in os.listdir(listed_folder):
         fileName = os.path.join(rootFolder, filepath, fn)
