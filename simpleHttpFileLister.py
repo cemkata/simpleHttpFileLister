@@ -4,7 +4,7 @@ import os
 import time
 import argparse
 
-VERSION = 2.2
+VERSION = 2.3
 
 blankIcon='data:image/gif;base64, R0lGODlhFAAWAKEAAP///8z//wAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAACE4yPqcvtD6OctNqLs968+w+GSQEAOw=='
 backIcon='data:image/gif;base64, R0lGODlhFAAWAMIAAP///8z//5mZmWZmZjMzMwAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAADSxi63P4jEPJqEDNTu6LO3PVpnDdOFnaCkHQGBTcqRRxuWG0v+5LrNUZQ8QPqeMakkaZsFihOpyDajMCoOoJAGNVWkt7QVfzokc+LBAA7'
@@ -110,6 +110,8 @@ def main():
         host = config['DEFAULT']['ip']
         serverRoot = config['DEFAULT']['serverRoot']
         serverName = config['DEFAULT']['serverName']
+        global selectedHeader
+        selectedHeader = config['DEFAULT']['disableupload']
     else:
         parser = argparse.ArgumentParser(prog='simpleHttpFileLister')
         cwd = os.getcwd()
@@ -124,7 +126,6 @@ def main():
                         help='Port to serve [Default=My serve]')
         parser.add_argument('-u', '--disableupload', type=int, default=1,
                         help='To disable the upload of files (by default is enable) Values = [1/0] [Default=1]')
-
         parser.add_argument('--version', action='version', version='%(prog)s v'+str(VERSION))
 
         args = parser.parse_args()
