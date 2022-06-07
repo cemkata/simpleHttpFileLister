@@ -135,7 +135,10 @@ def main():
         serverRoot = args.directory
         serverName = args.servername
         global selectedHeader
-        selectedHeader = args.disableupload
+        if args.disableupload == 0:
+            selectedHeader = 0
+        else:
+            selectedHeader = 1
 
     os.chdir(serverRoot)
     rootFolder = os.getcwd()
