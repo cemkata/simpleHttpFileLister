@@ -55,7 +55,7 @@ def index(filepath = '/'):
           listed_folder = os.path.join(rootFolder, filepath)
 
        for fn in os.listdir(listed_folder):
-        if fn.startswith('index.'):
+        if fn.startswith('index.htm'):
            return static_file(filepath + fn, root=rootFolder)
         fileName = os.path.join(rootFolder, filepath, fn)
         date = time.strftime('%Y-%M-%d %H:%M', time.localtime(os.path.getmtime(fileName)))
@@ -110,7 +110,6 @@ def main():
         host = config['DEFAULT']['ip']
         serverRoot = config['DEFAULT']['serverRoot']
         serverName = config['DEFAULT']['serverName']
-        global selectedHeader
         selectedHeader = config['DEFAULT']['disableupload']
     else:
         parser = argparse.ArgumentParser(prog='simpleHttpFileLister')
@@ -134,7 +133,6 @@ def main():
         host = args.host
         serverRoot = args.directory
         serverName = args.servername
-        global selectedHeader
         if args.disableupload == 0:
             selectedHeader = 0
         else:
