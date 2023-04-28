@@ -100,7 +100,7 @@ def index(filepath = '/'):
    if filepath == 'favicon.ico':
       return favicon
    if os.path.isfile(filepath):
-      return static_file(filepath, root=rootFolder)
+      return static_file(filepath, root=rootFolder, download=os.path.basename(filepath))
    else:
        page=header.format(path=filepath)
        if filepath.startswith('../') or filepath == '/':
