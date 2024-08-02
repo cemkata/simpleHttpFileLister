@@ -5,8 +5,14 @@ import os
 import time
 import argparse
 from io import BytesIO
+try:
+    from paste import httpserver
+    from paste.translogger import TransLogger
+    PASTE_SERVER = True
+except ModuleNotFoundError:
+    PASTE_SERVER = False
 
-VERSION = 3.0
+VERSION = 3.1
 
 blankIcon='data:image/gif;base64, R0lGODlhFAAWAKEAAP///8z//wAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAACE4yPqcvtD6OctNqLs968+w+GSQEAOw=='
 backIcon='data:image/gif;base64, R0lGODlhFAAWAMIAAP///8z//5mZmWZmZjMzMwAAAAAAAAAAACH+TlRoaXMgYXJ0IGlzIGluIHRoZSBwdWJsaWMgZG9tYWluLiBLZXZpbiBIdWdoZXMsIGtldmluaEBlaXQuY29tLCBTZXB0ZW1iZXIgMTk5NQAh+QQBAAABACwAAAAAFAAWAAADSxi63P4jEPJqEDNTu6LO3PVpnDdOFnaCkHQGBTcqRRxuWG0v+5LrNUZQ8QPqeMakkaZsFihOpyDajMCoOoJAGNVWkt7QVfzokc+LBAA7'
@@ -148,6 +154,20 @@ def read_write_directory(directory):
         print('The specified directory does not exist')
         exit()
 
+class MyWSGIRefServer(ServerAdapter):
+    server = None
+    def run(self, handler):
+
+        handler = TransLogger(handler, setup_console_handler = (not self.quiet))
+        httpserver.serve(handler,
+                         host = self.host,
+                         port=str(self.port), **self.options) 
+    def stop(self):
+        pass
+        
+    def __repr__(self):
+        return "PasteServer()"
+
 def main():
     global serverRoot
     global serverName
@@ -203,8 +223,11 @@ def main():
     rootFolder = os.getcwd()
     print("Uploader version " + str(VERSION))
     print("\nWARNING: This is a development server. Do not use it in a production deployment.")
-    run(app, host = host, port = port)
-
+    if PASTE_SERVER:
+        server_custom = MyWSGIRefServer(host = host, port = port)
+        run(app, server = server_custom)
+    else:
+        run(app, host = host, port = port)
 
 if __name__ == '__main__':
     main()
