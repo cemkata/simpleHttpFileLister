@@ -1,6 +1,7 @@
 # Simple http server
 All scripts are wirent in pure python no other frameworks execpt [bottle framework](https://github.com/bottlepy/bottle).
 You do not need to install the framework, only download the bottle.py file and put it in the same folder.
+If multi-threading is needed to serve several users at once, a support for paste http server is added [Paste](https://github.com/pasteorg/paste).
   
 - server.py
 - uploader.py
@@ -85,7 +86,7 @@ Instead it should be:
 *builder v0.3*  
 *downloader v0.6*  
 *uploader v0.7*  
-*server v3.0*  
+*server v3.1*  
 
 
 
