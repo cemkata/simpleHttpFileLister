@@ -86,7 +86,7 @@ Instead it should be:
 *builder v0.3*  
 *downloader v0.6*  
 *uploader v0.7*  
-*server v3.1*  
+*server v3.2*  
 
 
 
