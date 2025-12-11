@@ -118,7 +118,7 @@ def index(filepath = '/'):
        try:
           for fn in os.listdir(listed_folder):
              fileName = os.path.join(rootFolder, filepath, fn)
-             date = time.strftime('%Y-%M-%d %H:%M', time.localtime(os.path.getmtime(fileName)))
+             date = time.strftime('%Y-%m-%d %H:%M', time.localtime(os.path.getmtime(fileName)))
              if os.path.isdir(fileName):
                 page = page + '<tr><td valign="top"><img src="'+folderIcon+'" alt="[FILE]"></td><td>\n<a href="'+ fn +'/">'+fn+'</a>\n</td>\n<td align="right">'+date+'  </td><td align="right"> - </td></tr>'
              else:
